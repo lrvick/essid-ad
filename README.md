@@ -1,4 +1,4 @@
-# essid- #
+# essid-ad #
 
 <http://github.com/lrvick/essid-ad>
 
