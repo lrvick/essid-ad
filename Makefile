@@ -29,4 +29,4 @@ upload: build
 	platformio run --target upload
 
 monitor:
-	platformio serialports monitor
+	platformio serialports monitor -b 115200
