@@ -12,7 +12,7 @@
 
 ## About ##
 
-This is project to turn cheap ESP8266 ESP-01 modules into simple wifi hotspots
+This is a project to turn cheap ESP8266 ESP-01 modules into simple wifi hotspots
 with a configurable essid and web page. Intended use case is cheap disposable 
 battery powered advertisements where the ESSID us a url.
 
