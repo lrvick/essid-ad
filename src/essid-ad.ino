@@ -1,33 +1,29 @@
 #include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <DNSServer.h>
+#include <FS.h>
 #include <config.h>
 
-/////////////////////
-// Pin Definitions //
-/////////////////////
-const int LED_PIN = 5; // Thing's onboard, green LED
-const int ANALOG_PIN = A0; // The only analog pin on the Thing
-const int DIGITAL_PIN = 12; // Digital pin to be read
-
-WiFiServer server(80);
+IPAddress apIP(10, 10, 10, 1);
+ESP8266WebServer webServer(80);
+DNSServer dnsServer;
 
 void setup() {
   Serial.begin(115200);
   WiFi.mode(WIFI_AP);
-  WiFi.softAP(ssid, password);
-  server.begin();
+  WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0));
+  WiFi.softAP(ssid);
+  dnsServer.start(53, "*", apIP);
+  SPIFFS.begin();
+  webServer.onNotFound([]() {
+    File file = SPIFFS.open("/index.html", "r");
+    webServer.streamFile(file, "text/html");
+    file.close();
+  });
+  webServer.begin();
 }
 
 void loop() {
-  // Check if a client has connected
-  WiFiClient client = server.available();
-  if (!client) { return; }
-
-    // Send the response to the client
-  client.print(s);
-  delay(1);
-  Serial.println("Client disonnected");
-
-  // The client will actually be disconnected 
-  // when the function returns and 'client' object is detroyed
+  dnsServer.processNextRequest();
+  webServer.handleClient();
 }
-

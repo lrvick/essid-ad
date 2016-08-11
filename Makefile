@@ -1,5 +1,4 @@
-.PHONY: setup clean setup build upload
-
+.PHONY: setup clean setup build upload uploadfs
 
 help:
 	@echo "setup - setup build deps"
@@ -24,8 +23,10 @@ else
 	$(error Please create config.h file from sample)
 endif	
 	
+uploadfs:
+	platformio run --target uploadfs
 
-upload: build
+upload: build uploadfs
 	platformio run --target upload
 
 monitor:

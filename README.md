@@ -36,13 +36,16 @@ battery powered advertisements where the ESSID us a url.
     vim config.h
     ```
 
-2. Build
+2. Create a data directory including 'index.html'
+
+  Note: all css/js/etc must be self-contained in one file
 
     ```bash
-    make build
+    mkdir data
+    echo "hello world" >> data/index.html
     ```
 
-3. Upload to board
+3. build and upload to board
 
     ```bash
     make upload
